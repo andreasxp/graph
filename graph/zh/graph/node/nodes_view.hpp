@@ -35,11 +35,11 @@ public:
 template <class T, class E>
 class node<T, E>::const_nodes_view
 	: public zh::cfprism<
-	node<T, E>::container,
+	const node<T, E>::container,
 	node<T, E>::const_node_iterator> {
 private:
 	using base = zh::cfprism<
-		node<T, E>::container,
+		const node<T, E>::container,
 		node<T, E>::const_node_iterator>;
 
 public:

@@ -24,11 +24,11 @@ public:
 template <class T, class E>
 class graph<T, E>::const_nodes_view
 	: public zh::cfprism<
-		graph<T, E>::container,
+		const graph<T, E>::container,
 		graph<T, E>::const_node_iterator> {
 private:
 	using base = zh::cfprism<
-		graph<T, E>::container,
+		const graph<T, E>::container,
 		graph<T, E>::const_node_iterator>;
 
 public:

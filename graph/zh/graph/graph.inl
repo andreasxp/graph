@@ -17,17 +17,22 @@ inline graph<T, E>::graph(const graph& other) {
 	for (auto& n : other.nodes()) {
 		// Emplace nodes and add them to the converter
 		if constexpr (std::is_same_v<T, void>) {
-			ptr_match[&n] = *emplace();
+			ptr_match[&n] = &*emplace();
 		}
 		else {
-			ptr_match[&n] = *emplace(n.value());
+			ptr_match[&n] = &*emplace(n.value());
 		}
 	}
 
 	// Connecting all nodes ---------------------------------------------------
 	for (auto& e : other.edges()) {
 		if (e.first().id() < e.second().id()) {
-			connect(*ptr_match[&e.first()], *ptr_match[&e.second()]);
+			if constexpr (std::is_same_v<E, void>) {
+				connect(*ptr_match[&e.first()], *ptr_match[&e.second()]);
+			}
+			else {
+				connect(*ptr_match[&e.first()], *ptr_match[&e.second()], e.value());
+			}
 		}
 	}
 }
@@ -171,7 +176,50 @@ inline void graph<T, E>::disconnect(node_iterator it1, node_iterator it2) {
 	disconnect(*it1, *it2);
 }
 
+template<class T, class E>
+inline T& graph<T, E>::front() {
+	return *begin();
+}
+
+template<class T, class E>
+inline const T& graph<T, E>::front() const {
+	return *begin();
+}
+
+template<class T, class E>
+inline T& graph<T, E>::back() {
+	return *std::prev(end());
+}
+
+template<class T, class E>
+inline const T& graph<T, E>::back() const {
+	return *std::prev(end());
+}
+
 // Modifiers ==================================================================
+template<class T, class E>
+inline typename graph<T, E>::node_iterator graph<T, E>::insert(const T& val) {
+	return emplace(val);
+}
+
+template<class T, class E>
+inline typename graph<T, E>::node_iterator graph<T, E>::insert(T&& val) {
+	return emplace(std::move(val));
+}
+
+template<class T, class E>
+template<class InputIt>
+inline void graph<T, E>::insert(InputIt first, InputIt last) {
+	for (; first != last; ++first) {
+		emplace(*first);
+	}
+}
+
+template<class T, class E>
+inline void graph<T, E>::insert(std::initializer_list<value_type> ilist) {
+	insert(ilist.begin(), ilist.end());
+}
+
 template<class T, class E>
 template<class ...Args>
 inline typename graph<T, E>::node_iterator graph<T, E>::emplace(Args&& ...args) {
@@ -179,6 +227,82 @@ inline typename graph<T, E>::node_iterator graph<T, E>::emplace(Args&& ...args) 
 		std::make_unique<node<T, E>>(std::forward<Args>(args)...));
 
 	return std::prev(nodes().end());
+}
+
+template<class T, class E>
+inline typename graph<T, E>::iterator graph<T, E>::erase(iterator it) {
+	return iterator(m_nodes.erase(it.base()));
+}
+
+template<class T, class E>
+inline typename graph<T, E>::node_iterator graph<T, E>::erase(node_iterator it) {
+	return node_iterator(m_nodes.erase(it.base()));
+}
+
+template<class T, class E>
+inline void graph<T, E>::erase(edge<T, E> e) {
+	disconnect(e.first(), e.second());
+}
+
+template<class T, class E>
+inline void graph<T, E>::clear() noexcept {
+	m_nodes.clear();
+}
+
+template<class T, class E>
+inline void graph<T, E>::reserve(size_type new_size) {
+	m_nodes.reserve(new_size);
+}
+
+// Observers ==================================================================
+template<class T, class E>
+inline bool graph<T, E>::empty() const noexcept {
+	return m_nodes.empty();
+}
+
+template<class T, class E>
+inline std::size_t graph<T, E>::size() const noexcept {
+	return m_nodes.size();
+}
+
+template<class T, class E>
+inline std::size_t graph<T, E>::capacity() const noexcept {
+	return m_nodes.capacity();
+}
+
+template<class T, class E>
+inline std::size_t graph<T, E>::count_edges() const noexcept {
+	return m_nodes.edges().size();
+}
+
+template<class T, class E>
+inline double graph<T, E>::ratio() const noexcept {
+	std::size_t max_edges = size() * (size() - 1) / 2;
+	std::size_t edges = count_edges();
+
+	return static_cast<double>(edges) / max_edges;
+}
+
+// Non-member functions =======================================================
+template<class T, class E>
+std::ostream& operator<<(std::ostream& os, const graph<T, E>& obj) {
+	os << "nodes: {";
+
+	const char* separator = "\n";
+	for (auto&& nd : obj.nodes()) {
+		os << separator << "    " << nd;
+		separator = ",\n";
+	}
+
+	os << "\n},\nedges: {";
+	separator = "\n";
+	for (auto&& nd : obj.edges()) {
+		os << separator << "    " << nd;
+		separator = ",\n";
+	}
+	os << "\n}";
+
+	return os;
 }
 
 } // namespace zh

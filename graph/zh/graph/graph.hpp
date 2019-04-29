@@ -135,19 +135,20 @@ public:
 	// Observers --------------------------------------------------------------
 	bool empty() const noexcept;
 	std::size_t size() const noexcept;
+	std::size_t capacity() const noexcept;
 
 	std::size_t count_edges() const noexcept;
 	double ratio() const noexcept;
 };
 
-template <class T>
-std::ostream& operator<<(std::ostream& os, const graph<T>& obj);
+template <class T, class E>
+std::ostream& operator<<(std::ostream& os, const graph<T, E>& obj);
 
-template <class T>
-void to_json(json& j, const graph<T>& obj);
+template <class T, class E>
+void to_json(json& j, const graph<T, E>& obj);
 
-template <class T>
-void from_json(const json& j, graph<T>& obj);
+template <class T, class E>
+void from_json(const json& j, graph<T, E>& obj);
 
 template<class T, class E>
 inline void swap(graph<T, E>& lhs, graph<T, E>& rhs) noexcept;

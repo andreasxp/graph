@@ -17,11 +17,7 @@ int main() {
 	g.connect(i2, i3, 1.5);
 	g.connect(i1, i3, 3.5);
 
-	for (auto&& i : g.edges()) {
-		std::cout << i << std::endl;
-	}
+	zh::graph<int, double> g1 = g;
 
-	for (auto&& n : g.nodes()) {
-		std::cout << n.value() << " ";
-	}
+	std::cout << g1;
 }

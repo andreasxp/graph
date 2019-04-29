@@ -78,6 +78,19 @@ inline void node<T, E>::disconnect(node& n) {
 	n.m_connections.erase(connection<T, E>::valueless(*this));
 }
 
+// Non-member functions =======================================================
+template<class T, class E>
+std::ostream& operator<<(std::ostream& os, const node<T, E>& n) {
+	os << "{#" << n.id();
+
+	if constexpr (!std::is_same_v<T, void>) {
+		os << " (value: " << n.value() << ")";
+	}
+
+	os << "}";
+	return os;
+}
+
 } // namespace zh
 
 namespace std {

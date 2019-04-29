@@ -2,14 +2,13 @@
 #include <variant>
 #include <cstdint>
 #include <type_traits>
+#include <iostream>
 #include "deps/ska/flat_hash_map.hpp"
 #include "../connection/connection.hpp"
 #include "../connection/connection_functors.hpp"
 #include "node_fwd.hpp"
 #include "../graph_fwd.hpp"
 #include "functors.hpp"
-
-#include <unordered_set>
 
 namespace zh {
 
@@ -19,7 +18,7 @@ public:
 	// A node has a set of connections.
 	// Connections are responsible for holding and deleting edge values, and
 	// only a single connection is allowed to another node.
-	using container = std::unordered_set< //ska::flat_hash_set<
+	using container = ska::flat_hash_set<
 		connection<T, E>,
 		connection_node_hash<T, E>,
 		connection_node_equal<T, E, node_id_equal>>;
@@ -87,6 +86,9 @@ private:
 	void connect(node& n, Args&&... edge_args);
 	void disconnect(node& n);
 };
+
+template <class T, class E>
+std::ostream& operator<<(std::ostream& os, const node<T, E>& n);
 
 } // namespace zh
 

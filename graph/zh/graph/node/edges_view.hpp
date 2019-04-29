@@ -30,12 +30,12 @@ public:
 template <class T, class E>
 class node<T, E>::const_edges_view
 	: public zh::cfprism<
-	node<T, E>::container,
+	const node<T, E>::container,
 	node<T, E>::const_edge_iterator,
 	std::tuple<const node<T, E>&>> {
 private:
 	using base = zh::cfprism<
-		node<T, E>::container,
+		const node<T, E>::container,
 		node<T, E>::const_edge_iterator,
 		std::tuple<const node<T, E>&>>;
 
