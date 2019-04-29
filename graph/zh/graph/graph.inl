@@ -97,14 +97,14 @@ inline auto graph<T, E>::edges() noexcept {
 	return ranges::view::for_each(m_nodes, [] (auto & node_ptr) {
 		auto& nd1 = *node_ptr;
 
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & cnc) {
-			auto& nd2 = *cnc.ptr;
+		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & con) {
+			auto& nd2 = *con;
 
 			if constexpr (std::is_same_v<E, void>) {
 				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(&nd1, &nd2));
 			}
 			else {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &*cnc.value));
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &con.value()));
 			}
 		});
 	});
@@ -115,14 +115,14 @@ inline auto graph<T, E>::edges() const noexcept {
 	return ranges::view::for_each(m_nodes, [] (auto& node_ptr) {
 		auto& nd1 = *node_ptr;
 
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto& cnc) {
-			auto& nd2 = *cnc.ptr;
+		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto& con) {
+			auto& nd2 = *con;
 
 			if constexpr (std::is_same_v<E, void>) {
 				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(&nd1, &nd2));
 			}
 			else {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &*cnc.value));
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &con.value()));
 			}
 		});
 	});

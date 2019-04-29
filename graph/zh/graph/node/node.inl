@@ -60,22 +60,22 @@ inline void node<T, E>::connect(node& n, Args&&... edge_args) {
 		static_assert(std::is_constructible_v<E, Args&&...>, "edge's value (E) cannot be constructed from these arguments");
 		auto edge_ptr = make_manual<E>(std::forward<Args>(edge_args)...);
 
-		// Create and get a ref to connection 1
-		connection<T, E> con1 {&n, make_manual<E>(std::forward<Args>(edge_args)...)};
-		connection<T, E> con2 {this, manual_ptr(con1.value)};
+		// Make connections
+		auto [con1, con2] = make_connections(*this, n, std::forward<Args>(edge_args)...);
 
+		// Create and get a ref to connection 1
 		auto& con = *m_connections.insert(std::move(con1)).first;
 		// Create connection 2
 		n.m_connections.insert(std::move(con2));
 
-		assert(con.value.has_deleter()); // Connection 1 should hold the deleter to the value that is shared between connections
+		assert(con.value_ptr().has_deleter()); // Connection 1 should hold the deleter to the value that is shared between connections
 	}
 }
 
 template<class T, class E>
 inline void node<T, E>::disconnect(node& n) {
-	  m_connections.erase(connection<T, E>(&n,   manual_ptr<E>(nullptr)));
-	n.m_connections.erase(connection<T, E>(this, manual_ptr<E>(nullptr)));
+	  m_connections.erase(connection<T, E>::valueless(n));
+	n.m_connections.erase(connection<T, E>::valueless(*this));
 }
 
 } // namespace zh
