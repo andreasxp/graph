@@ -1,5 +1,7 @@
 #pragma once
+#include <range/v3/all.hpp>
 #include "graph.hpp"
+#include "edge/edge.hpp"
 
 namespace zh {
 
@@ -91,13 +93,39 @@ inline typename graph<T, E>::const_nodes_view graph<T, E>::nodes() const noexcep
 }
 
 template<class T, class E>
-inline typename graph<T, E>::edges_view graph<T, E>::edges() noexcept {
-	return edges_view(m_nodes);
+inline auto graph<T, E>::edges() noexcept {
+	return ranges::view::for_each(m_nodes, [] (auto & node_ptr) {
+		auto& nd1 = *node_ptr;
+
+		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & cnc) {
+			auto& nd2 = *cnc.ptr;
+
+			if constexpr (std::is_same_v<E, void>) {
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(&nd1, &nd2));
+			}
+			else {
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &*cnc.value));
+			}
+		});
+	});
 }
 
 template<class T, class E>
-inline typename graph<T, E>::const_edges_view graph<T, E>::edges() const noexcept {
-	return const_edges_view(m_nodes);
+inline auto graph<T, E>::edges() const noexcept {
+	return ranges::view::for_each(m_nodes, [] (auto& node_ptr) {
+		auto& nd1 = *node_ptr;
+
+		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto& cnc) {
+			auto& nd2 = *cnc.ptr;
+
+			if constexpr (std::is_same_v<E, void>) {
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(&nd1, &nd2));
+			}
+			else {
+				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(&nd1, &nd2, &*cnc.value));
+			}
+		});
+	});
 }
 
 // Connecting =================================================================

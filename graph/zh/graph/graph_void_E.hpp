@@ -122,7 +122,5 @@ public:
 } // namespace zh
 
 #include "node_iterator_void_E.hpp"
-#include "edge_iterator.hpp"
 
 #include "nodes_view.hpp"
-#include "edges_view.hpp"

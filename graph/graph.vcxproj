@@ -193,10 +193,8 @@
     <ClInclude Include="zh\graph\connection\connection.hpp" />
     <ClInclude Include="zh\graph\connection\connection_functors.hpp" />
     <ClInclude Include="zh\graph\connection\connection_fwd.hpp" />
-    <ClInclude Include="zh\graph\edges_view.hpp" />
     <ClInclude Include="zh\graph\edge\edge.hpp" />
     <ClInclude Include="zh\graph\edge\edge_fwd.hpp" />
-    <ClInclude Include="zh\graph\edge_iterator.hpp" />
     <ClInclude Include="zh\graph\graph.hpp" />
     <ClInclude Include="zh\graph\graph_fwd.hpp" />
     <ClInclude Include="zh\graph\graph_void_E.hpp" />
@@ -221,9 +219,7 @@
     <None Include="deps\zh\prism\prism.inl" />
     <None Include="zh\graph\connection\connection.inl" />
     <None Include="zh\graph\connection\connection_functors.inl" />
-    <None Include="zh\graph\edges_view.inl" />
     <None Include="zh\graph\edge\edge.inl" />
-    <None Include="zh\graph\edge_iterator.inl" />
     <None Include="zh\graph\graph.inl" />
     <None Include="zh\graph\iterator.inl" />
     <None Include="zh\graph\node\edge_iterator.inl" />

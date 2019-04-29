@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "../node/node_fwd.hpp"
 #include "edge_fwd.hpp"
 
@@ -149,6 +150,12 @@ public:
 	// Access second node
 	const node<T, void>& second() const noexcept;
 };
+
+template <class T, class E>
+std::ostream& operator<<(std::ostream& os, const edge<T, E>& e);
+
+template <class T, class E>
+std::ostream& operator<<(std::ostream& os, const const_edge<T, E>& e);
 
 } // namespace zh
 

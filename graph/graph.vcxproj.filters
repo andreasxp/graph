@@ -86,13 +86,7 @@
     <ClInclude Include="zh\graph\node_iterator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="zh\graph\edge_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="zh\graph\nodes_view.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="zh\graph\edges_view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="zh\graph\graph_void_E.hpp">
@@ -148,16 +142,10 @@
     <None Include="zh\graph\node\edge_iterator.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="zh\graph\edge_iterator.inl">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="zh\graph\iterator.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="zh\graph\node_iterator.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="zh\graph\edges_view.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="deps\zh\prism\cfprism.inl">

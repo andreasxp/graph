@@ -49,19 +49,12 @@ public:
 	class node_iterator;
 	class const_node_iterator;
 
-	// Iterate over edges
-	class edge_iterator;
-	class const_edge_iterator;
-
 	// nodes_view is a prism - a lightweight struct that provides a
 	// way to access elements inside via begin and end. Since there are several
 	// ways to iterate over a graph (values, nodes, edges), graph provides
 	// nodes_view, edges_view, as well as plain begin/end for values.
 	class nodes_view;
 	class const_nodes_view;
-
-	class edges_view;
-	class const_edges_view;
 
 	// Member functions ========================================================
 	// Constructors ------------------------------------------------------------
@@ -89,8 +82,8 @@ public:
 	const_nodes_view nodes() const noexcept;
 
 	// Edge iterators ----------------------------------------------------------
-	edges_view       edges() noexcept;
-	const_edges_view edges() const noexcept;
+	auto edges() noexcept;
+	auto edges() const noexcept;
 
 	// Connecting --------------------------------------------------------------
 	// These are all static because it doesn't actually matter, graph just
@@ -132,7 +125,7 @@ public:
 	node_iterator erase(node_iterator it);
 	
 	// Erase edges
-	edge_iterator erase(edge_iterator it);
+	//edge_iterator erase(edge_iterator it);
 	void erase(edge<T, E> e);
 
 	void clear() noexcept;
@@ -165,9 +158,7 @@ inline void swap(graph<T, E>& lhs, graph<T, E>& rhs) noexcept;
 
 #include "iterator.hpp"
 #include "node_iterator.hpp"
-#include "edge_iterator.hpp"
 
 #include "nodes_view.hpp"
-#include "edges_view.hpp"
 
 #include "graph.inl"

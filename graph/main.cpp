@@ -11,40 +11,17 @@ int main() {
 
 	auto i1 = g.begin();
 	auto i2 = ++g.begin();
+	auto i3 = ++++g.begin();
 
 	g.connect(i1, i2, 0.5);
+	g.connect(i2, i3, 1.5);
+	g.connect(i1, i3, 3.5);
 
-	using namespace ranges;
-
-	auto edges =
-		view::for_each(g.m_nodes, [] (auto& node_ptr) {
-			auto& nd = *node_ptr;
-
-			return view::for_each(nd.m_connections, [&nd] (auto& cnc) {
-				auto& nd2 = *cnc.ptr;
-
-				return yield_if(nd.id() < nd2.id(), std::tie(nd, nd2));
-			});
-		});
-
-	auto edges2 =
-		view::for_each(g.nodes(), [] (auto& nd1) {
-			return view::for_each(nd.m_connections, [&nd1] (auto & cnc) {
-				auto& nd2 = *cnc.ptr;
-
-				return yield_if(nd.id() < nd2.id(), std::tie(nd, nd2));
-			});
-		});
-
-	for (auto e : edges) {
-		std::cout << std::get<0>(e).value() << ", " << std::get<1>(e).value() << std::endl;
+	for (auto&& i : g.edges()) {
+		std::cout << i << std::endl;
 	}
 
-	/*for (auto&& i : g) {
-		std::cout << i;
-	}*/
-
 	for (auto&& n : g.nodes()) {
-		std::cout << n.value();
+		std::cout << n.value() << " ";
 	}
 }
