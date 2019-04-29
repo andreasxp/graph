@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "../node/node_fwd.hpp"
 #include "edge_fwd.hpp"
+#include "../node/node_fwd.hpp"
 
 namespace zh {
 
@@ -21,7 +21,7 @@ private:
 	E*          m_value_ptr;
 
 public:
-	edge(node<T, E>* first_ptr, node<T, E>* second_ptr, E* value_ptr);
+	edge(node<T, E>& first, node<T, E>& second, E& value);
 
 	// Member types ===========================================================
 	using value_type = E;
@@ -57,7 +57,7 @@ private:
 	node<T, void>* m_first_ptr;
 	node<T, void>* m_second_ptr;
 
-	edge(node<T, void>* first_ptr, node<T, void>* second_ptr);
+	edge(node<T, void>& first, node<T, void>& second);
 public:
 	// Member types ===========================================================
 	using value_type = void;
@@ -90,7 +90,7 @@ private:
 	const node<T, E>* m_second_ptr;
 	const E*          m_value_ptr;
 
-	const_edge(const node<T, E>* first, const node<T, E>* second, const E* value);
+	const_edge(const node<T, E>& first, const node<T, E>& second, const E& value);
 public:
 	// Member types ===========================================================
 	using value_type = E;
@@ -125,7 +125,7 @@ private:
 	const node<T, void>* m_first_ptr;
 	const node<T, void>* m_second_ptr;
 
-	const_edge(const node<T, void>* first, const node<T, void>* second);
+	const_edge(const node<T, void>& first, const node<T, void>& second);
 public:
 	// Member types ===========================================================
 	using value_type = void;
