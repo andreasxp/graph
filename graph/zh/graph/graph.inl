@@ -99,38 +99,12 @@ inline typename graph<T, E>::const_nodes_view graph<T, E>::nodes() const noexcep
 
 template<class T, class E>
 inline auto graph<T, E>::edges() noexcept {
-	return ranges::view::for_each(m_nodes, [] (auto & node_ptr) {
-		auto& nd1 = *node_ptr;
-
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & con) {
-			auto& nd2 = *con;
-
-			if constexpr (std::is_same_v<E, void>) {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(nd1, nd2));
-			}
-			else {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(nd1, nd2, con.value()));
-			}
-		});
-	});
+	return edges_view(m_nodes);
 }
 
 template<class T, class E>
 inline auto graph<T, E>::edges() const noexcept {
-	return ranges::view::for_each(m_nodes, [] (auto& node_ptr) {
-		auto& nd1 = *node_ptr;
-
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto& con) {
-			auto& nd2 = *con;
-
-			if constexpr (std::is_same_v<E, void>) {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, void>(nd1, nd2));
-			}
-			else {
-				return ranges::yield_if(nd1.id() < nd2.id(), edge<T, E>(nd1, nd2, con.value()));
-			}
-		});
-	});
+	return const_edges_view(m_nodes);
 }
 
 // Connecting =================================================================
@@ -272,7 +246,7 @@ inline std::size_t graph<T, E>::capacity() const noexcept {
 
 template<class T, class E>
 inline std::size_t graph<T, E>::count_edges() const noexcept {
-	return m_nodes.edges().size();
+	return edges().size();
 }
 
 template<class T, class E>

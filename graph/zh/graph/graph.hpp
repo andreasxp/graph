@@ -8,15 +8,18 @@
 using json = nlohmann::json;
 
 #include "graph_fwd.hpp"
+#include "graph_helpers.hpp"
 #include "node/node.hpp"
 #include "node/functors.hpp"
+
+#include "edges_view.hpp"
 
 namespace zh {
 
 template <class T, class E>
 class graph {
 public:
-	using container = std::vector<std::unique_ptr<node<T, E>>>;
+	using container = detail::graph_container<T, E>;
 	container m_nodes;
 
 public:
@@ -55,6 +58,12 @@ public:
 	// nodes_view, edges_view, as well as plain begin/end for values.
 	class nodes_view;
 	class const_nodes_view;
+
+	using       edges_view = graph_edges_view<T, E>;
+	using const_edges_view = graph_const_edges_view<T, E>;
+
+	using       edge_iterator = typename       edges_view::iterator;
+	using const_edge_iterator = typename const_edges_view::iterator;
 
 	// Member functions ========================================================
 	// Constructors ------------------------------------------------------------
@@ -125,7 +134,6 @@ public:
 	node_iterator erase(node_iterator it);
 	
 	// Erase edges
-	//edge_iterator erase(edge_iterator it);
 	void erase(edge<T, E> e);
 
 	void clear() noexcept;

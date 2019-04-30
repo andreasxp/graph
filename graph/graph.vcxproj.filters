@@ -113,6 +113,12 @@
     <ClInclude Include="deps\zh\prism.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zh\graph\edges_view.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\graph_helpers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="deps\zh\manual_ptr\manual_ptr.inl">
@@ -158,6 +164,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="deps\zh\prism\prism.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\edges_view.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

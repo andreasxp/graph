@@ -20,4 +20,5 @@ int main() {
 	zh::graph<int, double> g1 = g;
 
 	std::cout << g1;
+	std::cout << g1.edges().empty();
 }

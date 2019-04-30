@@ -21,15 +21,14 @@ private:
 	E*          m_value_ptr;
 
 public:
-	edge(node<T, E>& first, node<T, E>& second, E& value);
-
 	// Member types ===========================================================
 	using value_type = E;
 	using node_type = node<T, E>;
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	// Edges are not publicly constructible, only copyable and movable
+	edge(node<T, E>& first, node<T, E>& second, E& value);
+
 	edge()                       = delete;
 	edge(const edge&)            = default;
 	edge(edge&&)                 = default;
@@ -57,7 +56,6 @@ private:
 	node<T, void>* m_first_ptr;
 	node<T, void>* m_second_ptr;
 
-	edge(node<T, void>& first, node<T, void>& second);
 public:
 	// Member types ===========================================================
 	using value_type = void;
@@ -65,7 +63,8 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	// Edges are not publicly constructible, only copyable and movable
+	edge(node<T, void>& first, node<T, void>& second);
+
 	edge()                       = delete;
 	edge(const edge&)            = default;
 	edge(edge&&)                 = default;
@@ -90,7 +89,6 @@ private:
 	const node<T, E>* m_second_ptr;
 	const E*          m_value_ptr;
 
-	const_edge(const node<T, E>& first, const node<T, E>& second, const E& value);
 public:
 	// Member types ===========================================================
 	using value_type = E;
@@ -98,15 +96,16 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	// Edges are not publicly constructible, only copyable and movable
+	const_edge(const node<T, E>& first, const node<T, E>& second, const E& value);
+
 	const_edge(const edge<T, E>& other) noexcept;
 
-	const_edge() = delete;
-	const_edge(const const_edge&) = default;
-	const_edge(const_edge&&) = default;
+	const_edge()                             = delete;
+	const_edge(const const_edge&)            = default;
+	const_edge(const_edge&&)                 = default;
 
 	const_edge& operator=(const const_edge&) = default;
-	const_edge& operator=(const_edge&&) = default;
+	const_edge& operator=(const_edge&&)      = default;
 
 	// Data access ------------------------------------------------------------
 	// Access first node
@@ -125,7 +124,6 @@ private:
 	const node<T, void>* m_first_ptr;
 	const node<T, void>* m_second_ptr;
 
-	const_edge(const node<T, void>& first, const node<T, void>& second);
 public:
 	// Member types ===========================================================
 	using value_type = void;
@@ -133,15 +131,16 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	// Edges are not publicly constructible, only copyable and movable
+	const_edge(const node<T, void>& first, const node<T, void>& second);
+
 	const_edge(const edge<T, void>& other) noexcept;
 
-	const_edge() = delete;
-	const_edge(const const_edge&) = default;
-	const_edge(const_edge&&) = default;
+	const_edge()                             = delete;
+	const_edge(const const_edge&)            = default;
+	const_edge(const_edge&&)                 = default;
 
 	const_edge& operator=(const const_edge&) = default;
-	const_edge& operator=(const_edge&&) = default;
+	const_edge& operator=(const_edge&&)      = default;
 
 	// Data access ------------------------------------------------------------
 	// Access first node

@@ -84,12 +84,12 @@ constexpr decltype(auto) cfprism<C, CIt, IArgs>::operator[](difference_type offs
 // Capacity -------------------------------------------------------------------
 template<class C, class CIt, class IArgs>
 constexpr std::size_t cfprism<C, CIt, IArgs>::size() const noexcept {
-	return std::distance(begin(), end());
+	return std::size(m_data);
 }
 
 template<class C, class CIt, class IArgs>
 constexpr bool cfprism<C, CIt, IArgs>::empty() const noexcept {
-	return size() == 0;
+	return std::empty(m_data);
 }
 
 } // namespace zh
