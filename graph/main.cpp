@@ -3,22 +3,20 @@
 #include "zh/graph/graph.hpp"
 
 int main() {
-	zh::graph<int, double> g;
-	g.emplace(1);
-	g.emplace(2);
-	g.emplace(3);
-	g.emplace(4);
+	zh::graph<void, int> g;
+	g.emplace();
+	g.emplace();
+	g.emplace();
+	g.emplace();
 
-	auto i1 = g.begin();
-	auto i2 = ++g.begin();
-	auto i3 = ++++g.begin();
+	auto i1 = g.nodes().begin();
+	auto i2 = ++g.nodes().begin();
+	auto i3 = ++++g.nodes().begin();
 
-	g.connect(i1, i2, 0.5);
-	g.connect(i2, i3, 1.5);
-	g.connect(i1, i3, 3.5);
+	g.connect(i1, i2, 1);
+	g.connect(i2, i3, 2);
+	g.connect(i1, i3, 3);
 
-	zh::graph<int, double> g1 = g;
-
-	std::cout << g1;
-	std::cout << g1.edges().empty();
+	std::cout << g << std::endl;
+	std::cout << g.edges().size();
 }

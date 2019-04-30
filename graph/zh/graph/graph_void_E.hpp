@@ -4,34 +4,33 @@
 #include <iostream>
 
 #include "deps/ska/unordered_map.hpp"
-#include "deps/nlohmann/json.hpp"
-using json = nlohmann::json;
 
 #include "graph_fwd.hpp"
+#include "detail.hpp"
 #include "node/node.hpp"
 #include "node/functors.hpp"
+
+#include "edges_view.hpp"
+#include "iterator.hpp"
+#include "nodes_view.hpp"
 
 namespace zh {
 
 template <class E>
 class graph<void, E> {
 private:
-	using container = std::vector<std::unique_ptr<node<void, E>>>;
+	using container = detail::graph_container<void, E>;
 	container m_nodes;
 
 public:
 	// Member types ============================================================
-	using value_type = void;
-	using node_type  = node<void, E>;
+	using value_type      = void;
+	using edge_value_type = E;
+	using edge_type       = edge<void, E>;
+	using node_type       = node<void, E>;
 
 	using size_type       = typename container::size_type;
 	using difference_type = typename container::difference_type;
-
-	using reference       = void;
-	using const_reference = void;
-
-	using pointer         = void;
-	using const_pointer   = void;
 
 	// The following iterators and views are implemented as nested classes for
 	// these reasons:
@@ -39,23 +38,23 @@ public:
 	// 2. Can't forward-declare using directives
 	// 3. Clearer error messages without using directives
 
-	// Iterate over nodes
-	class node_iterator;
-	class const_node_iterator;
-
-	// Iterate over edges
-	class edge_iterator;
-	class const_edge_iterator;
-
 	// nodes_view is a prism - a lightweight struct that provides a
 	// way to access elements inside via begin and end. Since there are several
 	// ways to iterate over a graph (values, nodes, edges), graph provides
 	// nodes_view, edges_view, as well as plain begin/end for values.
-	class nodes_view;
-	class const_nodes_view;
+	using       nodes_view = graph_nodes_view<void, E>;
+	using const_nodes_view = graph_const_nodes_view<void, E>;
 
-	class edges_view;
-	class const_edges_view;
+	using       edges_view = graph_edges_view<void, E>;
+	using const_edges_view = graph_const_edges_view<void, E>;
+
+	// Iterate over nodes
+	using       node_iterator = typename       nodes_view::iterator;
+	using const_node_iterator = typename const_nodes_view::iterator;
+
+	// Iterate over edges
+	using       edge_iterator = typename       edges_view::iterator;
+	using const_edge_iterator = typename const_edges_view::iterator;
 
 	// Member functions ========================================================
 	// Constructors ------------------------------------------------------------
@@ -67,10 +66,10 @@ public:
 	graph& operator=(graph rhs);
 
 	template <class T_, class E_>
-	friend inline void swap(graph<T_, E_>& first, graph<T_, E_>& second) noexcept;
+	friend void swap(graph<T_, E_>& first, graph<T_, E_>& second) noexcept;
 
 	// Iterators ---------------------------------------------------------------
-	// No iterators in graph<void>
+	// No iterators in graph<void, E>
 
 	// Node iterators ----------------------------------------------------------
 	nodes_view       nodes() noexcept;
@@ -81,31 +80,25 @@ public:
 	const_edges_view edges() const noexcept;
 
 	// Connecting --------------------------------------------------------------
-	template <class... Args, class = std::enable_if_t<
-		std::is_constructible_v<E, Args&&...> ||
-		(std::is_same_v<E, void> && sizeof...(Args) == 0)>>
-	void connect(node<void, E>& n1, node<void, E>& n2, Args&&... args);
-	template <class... Args, class = std::enable_if_t<
-		std::is_constructible_v<E, Args&&...> ||
-		(std::is_same_v<E, void> && sizeof...(Args) == 0)>>
-	void connect(node_iterator it1, node_iterator it2, Args&&... args);
+	// These are all static because it doesn't actually matter, graph just
+	// relays the connect request to nodes themselves.
+	template <class... Args>
+	static void connect(node<void, E>& nd1, node<void, E>& nd2, Args&& ... args);
+	template <class... Args>
+	static void connect(node_iterator it1, node_iterator it2, Args&& ... args);
 
-	void disconnect(node<void, E>& n1, node<void, E>& n2);
-	void disconnect(node_iterator it1, node_iterator it2);
+	static void disconnect(node<void, E>& nd1, node<void, E>& nd2);
+	static void disconnect(node_iterator it1, node_iterator it2);
 
 	// Element access ----------------------------------------------------------
-	// No element access in graph<void>
+	// No element access in graph<void, E>
 
 	// Modifiers ---------------------------------------------------------------
 	node_iterator insert();
 	node_iterator emplace();
 
-	// Erase nodes
-	node_iterator erase(node_iterator it);
-
-	// Erase edges
-	edge_iterator erase(edge_iterator it);
-	void erase(edge<void, E> e);
+	node_iterator erase(node_iterator it); // Erase nodes
+	void erase(edge<void, E> e);           // Erase edges
 
 	void clear() noexcept;
 
@@ -114,6 +107,7 @@ public:
 	// Observers --------------------------------------------------------------
 	bool empty() const noexcept;
 	std::size_t size() const noexcept;
+	std::size_t capacity() const noexcept;
 
 	std::size_t count_edges() const noexcept;
 	double ratio() const noexcept;
@@ -121,6 +115,6 @@ public:
 
 } // namespace zh
 
-#include "node_iterator_void_E.hpp"
+#include "non_member.hpp"
 
-#include "nodes_view.hpp"
+#include "graph_void_E.inl"

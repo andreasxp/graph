@@ -1,39 +1,41 @@
 #pragma once
-#include "graph.hpp"
 #include <boost/iterator/indirect_iterator.hpp>
+#include "node_iterator_fwd.hpp"
+#include "iterator_fwd.hpp"
+#include "detail.hpp"
 
 namespace zh {
 
 template <class T, class E>
-class graph<T, E>::node_iterator
-	: public boost::indirect_iterator<typename graph<T, E>::container::iterator> {
+class graph_node_iterator
+	: public boost::indirect_iterator<typename detail::graph_container<T, E>::iterator> {
 private:
-	using base_t = boost::indirect_iterator<typename graph<T, E>::container::iterator>;
+	using base_type = boost::indirect_iterator<typename detail::graph_container<T, E>::iterator>;
 
 public:
-	using base_t::base_t;
-	node_iterator(typename graph<T, E>::iterator other) noexcept;
+	using base_type::base_type;
+	graph_node_iterator(graph_iterator<T, E> other) noexcept;
 };
 
 template <class T, class E>
-class graph<T, E>::const_node_iterator
+class graph_const_node_iterator
 	: public boost::indirect_iterator<
-		typename graph<T, E>::container::const_iterator,
+		typename detail::graph_container<T, E>::const_iterator,
 		boost::iterators::use_default,
 		boost::iterators::use_default,
 		const node<T, E>&> {
 private:
-	using base_t = boost::indirect_iterator<
-		typename graph<T, E>::container::const_iterator,
+	using base_type = boost::indirect_iterator<
+		typename detail::graph_container<T, E>::const_iterator,
 		boost::iterators::use_default,
 		boost::iterators::use_default,
 		const node<T, E>&>;
 
 public:
-	using base_t::base_t;
-	const_node_iterator(typename graph<T, E>::node_iterator other) noexcept;
-	const_node_iterator(typename graph<T, E>::iterator other) noexcept;
-	const_node_iterator(typename graph<T, E>::const_iterator other) noexcept;
+	using base_type::base_type;
+	graph_const_node_iterator(graph_node_iterator<T, E> other) noexcept;
+	graph_const_node_iterator(graph_iterator<T, E> other) noexcept;
+	graph_const_node_iterator(graph_const_iterator<T, E> other) noexcept;
 };
 
 } // namespace zh

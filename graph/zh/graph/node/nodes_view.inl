@@ -3,37 +3,39 @@
 
 namespace zh {
 
+// node_nodes_view ============================================================
 template<class T, class E>
-inline typename node<T, E>::nodes_view::iterator
-node<T, E>::nodes_view::find(const node<T, E>& n) {
-	return this->m_data.find(connection<T, E>(&n, manual_ptr<E>(nullptr)));
+typename node_nodes_view<T, E>::iterator
+node_nodes_view<T, E>::find(const node<T, E>& nd) {
+	return this->m_data.find(connection<T, E>::valueless(nd));
 }
 
 template<class T, class E>
-inline typename node<T, E>::nodes_view::const_iterator
-node<T, E>::nodes_view::find(const node<T, E>& n) const {
-	return this->m_data.find(connection<T, E>(&n, manual_ptr<E>(nullptr)));
+typename node_nodes_view<T, E>::const_iterator
+node_nodes_view<T, E>::find(const node<T, E>& nd) const {
+	return this->m_data.find(connection<T, E>::valueless(nd));
 }
 
 template<class T, class E>
-inline bool node<T, E>::nodes_view::contains(const node<T, E>& n) const {
-	return find(n) != this->end();
+bool node_nodes_view<T, E>::contains(const node<T, E>& nd) const {
+	return find(nd) != this->end();
 }
 
-template<class T, class E>
-inline typename node<T, E>::const_nodes_view::const_iterator
-node<T, E>::const_nodes_view::find(const node<T, E>& n) const {
-	return this->m_data.find(connection<T, E>(&n, manual_ptr<E>(nullptr)));
-}
-
+// node_const_nodes_view ======================================================
 template <class T, class E>
-inline node<T, E>::const_nodes_view::const_nodes_view(const node<T, E>::nodes_view& other) :
-	base(static_cast<typename node<T, E>::nodes_view::base const&>(other)) {
+node_const_nodes_view<T, E>::node_const_nodes_view(const node_nodes_view<T, E>& other) :
+	base_type(static_cast<typename node_nodes_view<T, E>::base const&>(other)) {
 }
 
 template<class T, class E>
-inline bool node<T, E>::const_nodes_view::contains(const node<T, E>& n) const {
-	return find(n) != this->end();
+typename node_const_nodes_view<T, E>::const_iterator
+node_const_nodes_view<T, E>::find(const node<T, E>& nd) const {
+	return this->m_data.find(connection<T, E>::valueless(nd));
+}
+
+template<class T, class E>
+bool node_const_nodes_view<T, E>::contains(const node<T, E>& nd) const {
+	return find(nd) != this->end();
 }
 
 } // namespace zh

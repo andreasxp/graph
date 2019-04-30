@@ -1,51 +1,52 @@
 #pragma once
 #include <tuple>
-#include "node.hpp"
-#include "edge_iterator.hpp"
 #include "deps/zh/prism.hpp"
+#include "node_fwd.hpp"
+#include "edge_iterator.hpp"
 
 namespace zh {
 
 template <class T, class E>
-class node<T, E>::edges_view
+class node_edges_view
 	: public zh::fprism<
-	node<T, E>::container,
-	node<T, E>::edge_iterator,
-	node<T, E>::const_edge_iterator,
+	detail::node_container<T, E>,
+	node_edge_iterator<T, E>,
+	node_const_edge_iterator<T, E>,
 	std::tuple<node<T, E>&>> {
 private:
-	using base = zh::fprism<
-		node<T, E>::container,
-		node<T, E>::edge_iterator,
-		node<T, E>::const_edge_iterator,
+	using base_type = zh::fprism<
+		detail::node_container<T, E>,
+		node_edge_iterator<T, E>,
+		node_const_edge_iterator<T, E>,
 		std::tuple<node<T, E>&>>;
 
-	friend class node<T, E>::const_nodes_view;
+	template <class T_, class E_>
+	friend class node_const_edges_view;
 public:
-	edges_view(typename node<T, E>::container& data, node<T, E>& value) :
-		base(data, std::tie(value)) {
+	node_edges_view(detail::node_container<T, E>& data, node<T, E>& value) :
+		base_type(data, std::tie(value)) {
 	}
 };
 
 template <class T, class E>
-class node<T, E>::const_edges_view
+class node_const_edges_view
 	: public zh::cfprism<
-	const node<T, E>::container,
-	node<T, E>::const_edge_iterator,
+	const detail::node_container<T, E>,
+	node_const_edge_iterator<T, E>,
 	std::tuple<const node<T, E>&>> {
 private:
-	using base = zh::cfprism<
-		const node<T, E>::container,
-		node<T, E>::const_edge_iterator,
+	using base_type = zh::cfprism<
+		const detail::node_container<T, E>,
+		node_const_edge_iterator<T, E>,
 		std::tuple<const node<T, E>&>>;
 
 public:
-	const_edges_view(typename node<T, E>::container& data, node<T, E>& value) :
-		base(data, std::tuple(value)) {
+	node_const_edges_view(const detail::node_container<T, E>& data, const node<T, E>& value) :
+		base_type(data, std::tuple(value)) {
 	}
 	
-	const_edges_view(const node<T, E>::edges_view& other) :
-		base(other.m_data) {
+	node_const_edges_view(const node_edges_view<T, E>& other) :
+		base_type(other.m_data) {
 	}
 };
 

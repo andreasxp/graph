@@ -1,40 +1,43 @@
 #pragma once
 #include "deps/zh/prism.hpp"
-#include "graph.hpp"
+#include "detail.hpp"
 #include "node_iterator.hpp"
 
 namespace zh {
 
 template <class T, class E>
-class graph<T, E>::nodes_view
+class graph_nodes_view
 	: public zh::fprism<
-		graph<T, E>::container,
-		graph<T, E>::node_iterator,
-		graph<T, E>::const_node_iterator> {
+		detail::graph_container<T, E>,
+		graph_node_iterator<T, E>,
+		graph_const_node_iterator<T, E>> {
 private:
-	using base = zh::fprism<
-		graph<T, E>::container,
-		graph<T, E>::node_iterator,
-		graph<T, E>::const_node_iterator>;
+	using base_type = zh::fprism<
+		detail::graph_container<T, E>,
+		graph_node_iterator<T, E>,
+		graph_const_node_iterator<T, E>>;
 
 public:
-	using base::base;
+	using base_type::base_type;
+
+	template <class T_, class E_>
+	friend class graph_const_nodes_view;
 };
 
 template <class T, class E>
-class graph<T, E>::const_nodes_view
+class graph_const_nodes_view
 	: public zh::cfprism<
-		const graph<T, E>::container,
-		graph<T, E>::const_node_iterator> {
+		const detail::graph_container<T, E>,
+		graph_const_node_iterator<T, E>> {
 private:
-	using base = zh::cfprism<
-		const graph<T, E>::container,
-		graph<T, E>::const_node_iterator>;
+	using base_type = zh::cfprism<
+		const detail::graph_container<T, E>,
+		graph_const_node_iterator<T, E>>;
 
 public:
-	using base::base;
-	const_nodes_view(const nodes_view& other) :
-		base(other.m_data) {
+	using base_type::base_type;
+	graph_const_nodes_view(const graph_nodes_view<T, E>& other) :
+		base_type(other.m_data) {
 	}
 };
 

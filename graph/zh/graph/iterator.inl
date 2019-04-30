@@ -1,36 +1,37 @@
 #pragma once
 #include "iterator.hpp"
+#include "node_iterator.hpp"
 
 namespace zh {
 
 template <class T, class E>
-inline T& graph<T, E>::iterator::dereference() const noexcept {
+inline T& graph_iterator<T, E>::dereference() const noexcept {
 	return (*this->base_reference())->value();
 }
 
 template <class T, class E>
-inline graph<T, E>::iterator::iterator(typename graph<T, E>::node_iterator other) noexcept :
-	base_t(other.base()) {
+inline graph_iterator<T, E>::graph_iterator(graph_node_iterator<T, E> other) noexcept :
+	base_type(other.base()) {
 }
 
 template <class T, class E>
-inline const T& graph<T, E>::const_iterator::dereference() const noexcept {
+inline const T& graph_const_iterator<T, E>::dereference() const noexcept {
 	return (*this->base_reference())->value();
 }
 
 template <class T, class E>
-inline graph<T, E>::const_iterator::const_iterator(typename graph<T, E>::iterator other) noexcept :
-	base_t(other.base()) {
+inline graph_const_iterator<T, E>::graph_const_iterator(graph_iterator<T, E> other) noexcept :
+	base_type(other.base()) {
 }
 
 template <class T, class E>
-inline graph<T, E>::const_iterator::const_iterator(typename graph<T, E>::node_iterator other) noexcept :
-	base_t(other.base()) {
+inline graph_const_iterator<T, E>::graph_const_iterator(graph_node_iterator<T, E> other) noexcept :
+	base_type(other.base()) {
 }
 
 template <class T, class E>
-inline graph<T, E>::const_iterator::const_iterator(typename graph<T, E>::const_node_iterator other) noexcept :
-	base_t(other.base()) {
+inline graph_const_iterator<T, E>::graph_const_iterator(graph_const_node_iterator<T, E> other) noexcept :
+	base_type(other.base()) {
 }
 
 } // namespace zh

@@ -4,13 +4,13 @@
 namespace zh {
 
 template <class T, class E>
-inline node<T, E>::edge_iterator::edge_iterator(typename container::iterator iter, node<T, E>& source) :
-	base(iter),
+node_edge_iterator<T, E>::node_edge_iterator(typename detail::node_container<T, E>::iterator iter, node<T, E>& source) :
+	base_type(iter),
 	m_source(source) {
 }
 
 template <class T, class E>
-inline edge<T, E> node<T, E>::edge_iterator::dereference() const noexcept {
+edge<T, E> node_edge_iterator<T, E>::dereference() const noexcept {
 	if constexpr (std::is_same_v<E, void>) {
 		return edge<T, E>(&m_source, this->base_reference()->ptr); // no value
 	}
@@ -20,13 +20,13 @@ inline edge<T, E> node<T, E>::edge_iterator::dereference() const noexcept {
 }
 
 template <class T, class E>
-inline node<T, E>::const_edge_iterator::const_edge_iterator(typename container::const_iterator iter, const node<T, E>& source) :
-	base(iter),
+node_const_edge_iterator<T, E>::node_const_edge_iterator(typename detail::node_container<T, E>::const_iterator iter, const node<T, E>& source) :
+	base_type(iter),
 	m_source(source) {
 }
 
 template <class T, class E>
-inline const_edge<T, E> node<T, E>::const_edge_iterator::dereference() const noexcept {
+const_edge<T, E> node_const_edge_iterator<T, E>::dereference() const noexcept {
 	if constexpr (std::is_same_v<E, void>) {
 		return const_edge<T, E>(&m_source, this->base_reference()->ptr); // no value
 	}
@@ -36,8 +36,8 @@ inline const_edge<T, E> node<T, E>::const_edge_iterator::dereference() const noe
 }
 
 template <class T, class E>
-inline node<T, E>::const_edge_iterator::const_edge_iterator(const node<T, E>::edge_iterator& other) :
-	const_edge_iterator(other.base(), other.m_source) {
+node_const_edge_iterator<T, E>::node_const_edge_iterator(const node_edge_iterator<T, E>& other) :
+	node_const_edge_iterator(other.base(), other.m_source) {
 }
 
 } // namespace zh

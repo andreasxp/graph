@@ -16,4 +16,4 @@ struct connection_node_equal;
 
 } // namespace zh
 
-#include "connection_functors.inl"
+#include "functors.inl"

@@ -1,23 +1,23 @@
 #pragma once
 #include <boost/iterator/iterator_adaptor.hpp>
-#include "node.hpp"
+#include "detail.hpp"
 #include "../edge/edge_fwd.hpp"
 
 namespace zh {
 
 template <class T, class E>
-class node<T, E>::edge_iterator
+class node_edge_iterator
 	: public boost::iterator_adaptor<
-	typename node<T, E>::edge_iterator,
-	typename node<T, E>::container::iterator,
+	node_edge_iterator<T, E>,
+	typename detail::node_container<T, E>::iterator,
 	edge<T, E>,
 	boost::iterators::use_default,
 	edge<T, E>> {
 
 private:
-	using base = boost::iterator_adaptor<
-		typename node<T, E>::edge_iterator,
-		typename node<T, E>::container::iterator,
+	using base_type = boost::iterator_adaptor<
+		node_edge_iterator<T, E>,
+		typename detail::node_container<T, E>::iterator,
 		edge<T, E>,
 		boost::iterators::use_default,
 		edge<T, E>>;
@@ -28,22 +28,22 @@ private:
 	edge<T, E> dereference() const noexcept;
 
 public:
-	edge_iterator(typename container::iterator iter, node<T, E>& source);
+	node_edge_iterator(typename detail::node_container<T, E>::iterator iter, node<T, E>& source);
 };
 
 template <class T, class E>
-class node<T, E>::const_edge_iterator
+class node_const_edge_iterator
 	: public boost::iterator_adaptor<
-	typename node<T, E>::const_edge_iterator,
-	typename node<T, E>::container::const_iterator,
+	node_const_edge_iterator<T, E>,
+	typename detail::node_container<T, E>::const_iterator,
 	const_edge<T, E>,
 	boost::iterators::use_default,
 	const_edge<T, E>> {
 
 private:
-	using base = boost::iterator_adaptor<
-		typename node<T, E>::const_edge_iterator,
-		typename node<T, E>::container::const_iterator,
+	using base_type = boost::iterator_adaptor<
+		node_const_edge_iterator<T, E>,
+		typename detail::node_container<T, E>::const_iterator,
 		const_edge<T, E>,
 		boost::iterators::use_default,
 		const_edge<T, E>>;
@@ -54,8 +54,8 @@ private:
 	const_edge<T, E> dereference() const noexcept;
 
 public:
-	const_edge_iterator(typename container::const_iterator iter, const node<T, E>& source);
-	const_edge_iterator(const node<T, E>::edge_iterator& other);
+	node_const_edge_iterator(typename detail::node_container<T, E>::const_iterator iter, const node<T, E>& source);
+	node_const_edge_iterator(const node_edge_iterator<T, E>& other);
 };
 
 } // namespace zh

@@ -5,7 +5,7 @@
 namespace zh {
 
 template<class T, class E>
-inline bool node_id_equal::operator()(const node<T, E>& lhs, const node<T, E>& rhs) const noexcept {
+bool node_id_equal::operator()(const node<T, E>& lhs, const node<T, E>& rhs) const noexcept {
 	return lhs.id() == rhs.id();
 }
 

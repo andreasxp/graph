@@ -1,22 +1,24 @@
 #pragma once
-#include "graph.hpp"
 #include <boost/iterator/iterator_adaptor.hpp>
+#include "iterator_fwd.hpp"
+#include "node_iterator_fwd.hpp"
+#include "detail.hpp"
 
 namespace zh {
 
 template <class T, class E>
-class graph<T, E>::iterator
+class graph_iterator
 	: public boost::iterator_adaptor<
-	typename graph<T, E>::iterator,
-	typename graph<T, E>::container::iterator,
+	graph_iterator<T, E>,
+	typename detail::graph_container<T, E>::iterator,
 	T,
 	boost::iterators::use_default,
 	T&> {
 
 private:
-	using base_t = boost::iterator_adaptor<
-		typename graph<T, E>::iterator,
-		typename graph<T, E>::container::iterator,
+	using base_type = boost::iterator_adaptor<
+		graph_iterator<T, E>,
+		typename detail::graph_container<T, E>::iterator,
 		T,
 		boost::iterators::use_default,
 		T&>;
@@ -25,23 +27,23 @@ private:
 	T& dereference() const noexcept;
 
 public:
-	using base_t::base_t;
-	iterator(typename graph<T, E>::node_iterator other) noexcept;
+	using base_type::base_type;
+	graph_iterator(graph_node_iterator<T, E> other) noexcept;
 };
 
 template <class T, class E>
-class graph<T, E>::const_iterator
+class graph_const_iterator
 	: public boost::iterator_adaptor<
-	typename graph<T, E>::const_iterator,
-	typename graph<T, E>::container::const_iterator,
+	graph_const_iterator<T, E>,
+	typename detail::graph_container<T, E>::const_iterator,
 	T,
 	boost::iterators::use_default,
 	const T&> {
 
 private:
-	using base_t = boost::iterator_adaptor<
-		typename graph<T, E>::const_iterator,
-		typename graph<T, E>::container::const_iterator,
+	using base_type = boost::iterator_adaptor<
+		graph_const_iterator<T, E>,
+		typename detail::graph_container<T, E>::const_iterator,
 		T,
 		boost::iterators::use_default,
 		const T&>;
@@ -50,10 +52,10 @@ private:
 	const T& dereference() const noexcept;
 
 public:
-	using base_t::base_t;
-	const_iterator(typename graph<T, E>::iterator other) noexcept;
-	const_iterator(typename graph<T, E>::node_iterator other) noexcept;
-	const_iterator(typename graph<T, E>::const_node_iterator other) noexcept;
+	using base_type::base_type;
+	graph_const_iterator(graph_iterator<T, E> other) noexcept;
+	graph_const_iterator(graph_node_iterator<T, E> other) noexcept;
+	graph_const_iterator(graph_const_node_iterator<T, E> other) noexcept;
 };
 
 } // namespace zh

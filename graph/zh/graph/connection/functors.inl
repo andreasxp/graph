@@ -1,5 +1,5 @@
 #pragma once
-#include "connection_functors.hpp"
+#include "functors.hpp"
 #include "connection.hpp"
 
 namespace zh {

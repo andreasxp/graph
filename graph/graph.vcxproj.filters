@@ -119,6 +119,45 @@
     <ClInclude Include="zh\graph\graph_helpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zh\graph\connection\connection_T_void.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\connection\non_member.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\edge\const_edge.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\edge\edge_T_void.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\edge\const_edge_T_void.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\edge\non_member.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\iterator_fwd.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\node_iterator_fwd.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\non_member.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\node\non_member.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\node\node_helpers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\detail.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph\node\detail.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="deps\zh\manual_ptr\manual_ptr.inl">
@@ -167,6 +206,39 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="zh\graph\edges_view.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\connection\connection_T_void.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\connection\non_member.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\edge\non_member.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\edge\const_edge.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\edge\const_edge_T_void.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\edge\edge_T_void.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\node_iterator_void_E.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\graph_void_E.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\non_member.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\node\non_member.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\node\node_void_E.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

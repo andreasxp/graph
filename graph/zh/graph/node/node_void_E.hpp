@@ -1,19 +1,25 @@
 #pragma once
-#include "node.hpp"
+#include <cstdint>
+#include "node_fwd.hpp"
+#include "detail.hpp"
+#include "../graph_fwd.hpp"
+#include "functors.hpp"
+
+#include "nodes_view.hpp"
+#include "edges_view.hpp"
 
 namespace zh {
 
 template <class E>
 class node<void, E> {
-	// Node specialization that holds no internal value
+	// Specialization of node that holds no internal value
 private:
 	// A node has a set of connections.
 	// Connections are responsible for holding and deleting edge values, and
 	// only a single connection is allowed to another node.
-	using container = ska::flat_hash_set<
-		connection<void, E>,
-		connection_node_hash<void, E>,
-		connection_node_equal<void, E, node_id_equal>>;
+	using container = detail::node_container<void, E>;
+
+	container m_connections;
 
 public:
 	// Member types ===========================================================
@@ -21,38 +27,49 @@ public:
 	// Nodes are not copyable nor movable, and
 	// never change the ID.
 	using value_type = void;
+	using edge_value_type = E;
 	using id_type = std::uintptr_t;
 
-	class node_iterator;
-	class const_node_iterator;
+	using nodes_view       = node_nodes_view<void, E>;
+	using const_nodes_view = node_const_nodes_view<void, E>;
 
-	class nodes_view;
-	class const_nodes_view;
+	using edges_view       = node_edges_view<void, E>;
+	using const_edges_view = node_const_edges_view<void, E>;
 
-	class edge_iterator;
-	class const_edge_iterator;
+	using node_iterator       = typename       nodes_view::iterator;
+	using const_node_iterator = typename const_nodes_view::iterator;
 
-	class edges_view;
-	class const_edges_view;
+	using edge_iterator       = typename       edges_view::iterator;
+	using const_edge_iterator = typename const_edges_view::iterator;
+
+	// Friends ================================================================
+	template <class T_, class E_>
+	friend class graph;
+	
+	template <class T_, class E_>
+	friend auto detail::make_edges_view(detail::graph_container<T_, E_>& c);
+	
+	template <class T_, class E_>
+	friend auto detail::make_edges_view(const detail::graph_container<T_, E_>& c);
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	node() = default;
-	node(const node&) = delete;
-	node(node&&) = delete;
+	explicit node()              = default;
+	node(const node&)            = delete;
+	node(node&&)                 = delete;
 
 	node& operator=(const node&) = delete;
-	node& operator=(node&&) = delete;
+	node& operator=(node&&)      = delete;
 
 	// Disconnecting edges is not the node's responsibility.
 	// Graph does that when erasing the node.
 	~node() = default;
 
 	// Iterators ---------------------------------------------------------------
-	nodes_view adjacent_nodes() noexcept;
+	nodes_view       adjacent_nodes() noexcept;
 	const_nodes_view adjacent_nodes() const noexcept;
 
-	edges_view edges() noexcept;
+	edges_view       edges() noexcept;
 	const_edges_view edges() const noexcept;
 
 	// Observers ---------------------------------------------------------------
@@ -66,3 +83,5 @@ private:
 };
 
 } // namespace zh
+
+#include "node_void_E.inl"
