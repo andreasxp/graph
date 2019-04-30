@@ -74,9 +74,6 @@
     <ClInclude Include="zh\graph\node\edges_view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\nlohmann\json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="zh\graph\graph_fwd.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

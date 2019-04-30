@@ -179,7 +179,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="deps\nlohmann\json.hpp" />
     <ClInclude Include="deps\ska\bytell_hash_map.hpp" />
     <ClInclude Include="deps\ska\flat_hash_map.hpp" />
     <ClInclude Include="deps\ska\unordered_map.hpp" />
