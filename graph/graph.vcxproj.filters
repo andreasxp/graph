@@ -155,6 +155,9 @@
     <ClInclude Include="zh\graph\node\detail.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zh\graph\connection\functors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="deps\zh\manual_ptr\manual_ptr.inl">
@@ -236,6 +239,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="zh\graph\node\node_void_E.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="zh\graph\connection\functors.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

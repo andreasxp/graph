@@ -42,10 +42,12 @@ public:
 	make_connections(node<T_, E_>& first, node<T_, E_>& second, Args&&... value_args);
 
 	// Fake connection constructors
-	// These don't construct actual valid connections. Use with caution.
+	// These don't construct actual valid connections. They accept const
+	// references and cast const away.
+	// These are intended to be used for searching purpuses. Use with caution.
 	//template <class... Args>
 	//static connection unpointed(Args&&... value_args);
-	static connection valueless(node<T, E>& where);
+	static connection valueless(const node<T, E>& where);
 	static connection blank();
 
 	// Member access ----------------------------------------------------------

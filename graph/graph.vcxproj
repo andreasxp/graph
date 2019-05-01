@@ -193,6 +193,7 @@
     <ClInclude Include="zh\graph\connection\connection_functors.hpp" />
     <ClInclude Include="zh\graph\connection\connection_fwd.hpp" />
     <ClInclude Include="zh\graph\connection\connection_T_void.hpp" />
+    <ClInclude Include="zh\graph\connection\functors.hpp" />
     <ClInclude Include="zh\graph\connection\non_member.hpp" />
     <ClInclude Include="zh\graph\detail.hpp" />
     <ClInclude Include="zh\graph\edges_view.hpp" />
@@ -234,6 +235,7 @@
     <None Include="zh\graph\connection\connection.inl" />
     <None Include="zh\graph\connection\connection_functors.inl" />
     <None Include="zh\graph\connection\connection_T_void.inl" />
+    <None Include="zh\graph\connection\functors.inl" />
     <None Include="zh\graph\connection\non_member.inl" />
     <None Include="zh\graph\edges_view.inl" />
     <None Include="zh\graph\edge\const_edge.inl" />

@@ -14,8 +14,8 @@ connection<T, void>::connection(node<T, void>& where) :
 }
 
 template<class T>
-connection<T, void> connection<T, void>::valueless(node<T, void>& where) {
-	return connection(&where);
+connection<T, void> connection<T, void>::valueless(const node<T, void>& where) {
+	return connection(&const_cast<node<T, void>&>(where));
 }
 
 template<class T>
