@@ -106,6 +106,10 @@ void graph<T, E>::connect(node<T, E>& nd1, node<T, E>& nd2, Args&&... edge_args)
 			"graph::connect: cannot constuct edge_value_type from these arguments");
 	}
 
+	if (nd1.id() == nd2.id()) {
+		throw std::invalid_argument("graph::connect: cannot connect node to itself");
+	}
+
 	nd1.connect(nd2, std::forward<Args>(edge_args)...);
 }
 
