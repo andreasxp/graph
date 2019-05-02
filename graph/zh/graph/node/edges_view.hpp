@@ -42,7 +42,7 @@ private:
 
 public:
 	node_const_edges_view(const detail::node_container<T, E>& data, const node<T, E>& value) :
-		base_type(data, std::tuple(value)) {
+		base_type(data, std::tie(value)) {
 	}
 	
 	node_const_edges_view(const node_edges_view<T, E>& other) :

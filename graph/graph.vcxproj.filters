@@ -158,6 +158,12 @@
     <ClInclude Include="zh\graph\connection\functors.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zh\graph\algorithm\line_graph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zh\graph.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="deps\zh\manual_ptr\manual_ptr.inl">

@@ -59,18 +59,19 @@ void node<T, E>::connect(node& n, Args&&... edge_args) {
 	}
 
 	// Make 2 connections {*this, n} and {n, *this} with provided arguments
-	auto [con1, con2] = make_connections(*this, n, std::forward<Args>(edge_args)...);
+	auto [con1_temp, con2_temp] = make_connections(*this, n, std::forward<Args>(edge_args)...);
 
-	// Create and get a ref to connection 1
-	auto& con = *m_connections.insert(std::move(con1)).first;
-	// Create connection 2
-	n.m_connections.insert(std::move(con2));
+	auto& con1 = *  m_connections.insert(std::move(con1_temp)).first; // Create connection 1
+	auto& con2 = *n.m_connections.insert(std::move(con2_temp)).first; // Create connection 2
 
 	// If a value was inserted, verify that one of the connections has the deleter.
 	// Otherwise there's a bug in this function, the deleter was lost somewhere and
 	// the value will be deleted at the end of this scope.
 	if constexpr (!std::is_same_v<E, void>) {
-		assert(con.value_ptr().has_deleter());
+		assert(
+			con1.value_ptr().has_deleter() ||
+			con2.value_ptr().has_deleter()
+		);
 	}
 }
 

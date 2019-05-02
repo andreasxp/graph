@@ -189,6 +189,8 @@
     <ClInclude Include="deps\zh\prism\cprism.hpp" />
     <ClInclude Include="deps\zh\prism\fprism.hpp" />
     <ClInclude Include="deps\zh\prism\prism.hpp" />
+    <ClInclude Include="zh\graph.hpp" />
+    <ClInclude Include="zh\graph\algorithm\line_graph.hpp" />
     <ClInclude Include="zh\graph\connection\connection.hpp" />
     <ClInclude Include="zh\graph\connection\connection_functors.hpp" />
     <ClInclude Include="zh\graph\connection\connection_fwd.hpp" />
