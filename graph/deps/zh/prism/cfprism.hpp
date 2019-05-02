@@ -9,8 +9,12 @@ template <
 	class CIt,
 	class IArgs = std::tuple<>> // Additional args to construct an iterator with
 class cfprism : private IArgs {
-protected:
+private:
 	C& m_data;
+
+protected:
+	C&       base() noexcept;
+	const C& base() const noexcept;
 
 	IArgs& args() noexcept;
 	const IArgs& args() const noexcept;

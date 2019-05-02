@@ -15,7 +15,7 @@ template <
 	class IArgs = std::tuple<>>
 class prism : public cprism<C, CIt, CRIt, IArgs> {
 private:
-	using base = cprism<C, CIt, CRIt, IArgs>;
+	using base_type = cprism<C, CIt, CRIt, IArgs>;
 
 public:
 	// Member types ===========================================================
@@ -35,7 +35,7 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	using base::base;
+	using base_type::base_type;
 
 	// Casting ----------------------------------------------------------------
 	// The inheritance diagram for the prism family looks like this:
@@ -52,27 +52,31 @@ public:
 	constexpr operator const fprism<C, It, CIt>&() const noexcept;
 
 	// Iterators --------------------------------------------------------------
-	constexpr It begin() noexcept;
-	// Other begins inherited
+	constexpr It  begin() noexcept;
+	constexpr CIt begin() const noexcept;
+	// cbegin inherited
 
-	constexpr It end() noexcept;
-	// Other ends inherited
+	constexpr It  end() noexcept;
+	constexpr CIt end() const noexcept;
+	// cend inherited
 
-	constexpr RIt rbegin() noexcept;
-	// Other begins inherited
+	constexpr RIt  rbegin() noexcept;
+	constexpr CRIt rbegin() const noexcept;
+	// crbegin inherited
 
-	constexpr RIt rend() noexcept;
-	// Other ends inherited
+	constexpr RIt  rend() noexcept;
+	constexpr CRIt rend() const noexcept;
+	// crend inherited
 
 	// Element access ---------------------------------------------------------
 	constexpr decltype(auto) front();
-	// const version inherited
+	constexpr decltype(auto) front() const;
 
 	constexpr decltype(auto) back();
-	// const version inherited
+	constexpr decltype(auto) back() const;
 
 	constexpr decltype(auto) operator[](difference_type offset);
-	// const version inherited
+	constexpr decltype(auto) operator[](difference_type offset) const;
 
 	// Capacity methods inherited
 };

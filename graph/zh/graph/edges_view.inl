@@ -6,7 +6,7 @@ namespace zh {
 // graph_edges_view ===========================================================
 template<class T, class E>
 inline graph_edges_view<T, E>::graph_edges_view(detail::graph_container<T, E>& c) :
-	base(detail::make_edges_view(c)),
+	base_type(detail::make_edges_view(c)),
 	m_data(c) {
 }
 
@@ -29,13 +29,13 @@ inline bool graph_edges_view<T, E>::empty() const noexcept {
 // graph_const_edges_view =====================================================
 template<class T, class E>
 inline graph_const_edges_view<T, E>::graph_const_edges_view(const detail::graph_container<T, E>& c) :
-	base(detail::make_edges_view(c)),
+	base_type(detail::make_edges_view(c)),
 	m_data(c) {
 }
 
 template<class T, class E>
 inline graph_const_edges_view<T, E>::graph_const_edges_view(const graph_edges_view<T, E>& view) :
-	base(detail::make_edges_view(view.m_data)),
+	base_type(detail::make_edges_view(view.m_data)),
 	m_data(view.m_data) {
 }
 

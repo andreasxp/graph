@@ -5,20 +5,30 @@
 namespace zh {
 
 // Member functions ===========================================================
-// Private --------------------------------------------------------------------
+// Protected ------------------------------------------------------------------
 template<class C, class CIt, class IArgs>
-inline IArgs& cfprism<C, CIt, IArgs>::args() noexcept {
+C& cfprism<C, CIt, IArgs>::base() noexcept {
+	return m_data;
+}
+
+template<class C, class CIt, class IArgs>
+const C& cfprism<C, CIt, IArgs>::base() const noexcept {
+	return m_data;
+}
+
+template<class C, class CIt, class IArgs>
+IArgs& cfprism<C, CIt, IArgs>::args() noexcept {
 	return static_cast<IArgs&>(*this);
 }
 
 template<class C, class CIt, class IArgs>
-inline const IArgs& cfprism<C, CIt, IArgs>::args() const noexcept {
+const IArgs& cfprism<C, CIt, IArgs>::args() const noexcept {
 	return static_cast<const IArgs&>(*this);
 }
 
 // Constructors ---------------------------------------------------------------
 template<class C, class CIt, class IArgs>
-inline constexpr cfprism<C, CIt, IArgs>::cfprism(C& container, const IArgs& iargs) :
+constexpr cfprism<C, CIt, IArgs>::cfprism(C& container, const IArgs& iargs) :
 	IArgs(iargs),
 	m_data(container) {
 }
@@ -30,9 +40,9 @@ constexpr CIt cfprism<C, CIt, IArgs>::begin() const noexcept {
 	using std::make_tuple;
 	using std::tuple_cat;
 
-	// Make CIt from m_data.begin() and additional args()
+	// Make CIt from base().begin() and additional args()
 	return make_from_tuple<CIt>(
-		tuple_cat(make_tuple(m_data.begin()), args()));
+		tuple_cat(make_tuple(base().begin()), args()));
 }
 
 template<class C, class CIt, class IArgs>
@@ -42,7 +52,7 @@ constexpr CIt cfprism<C, CIt, IArgs>::cbegin() const noexcept {
 	using std::tuple_cat;
 
 	return make_from_tuple<CIt>(
-		tuple_cat(make_tuple(m_data.cbegin()), args()));
+		tuple_cat(make_tuple(base().cbegin()), args()));
 }
 
 template<class C, class CIt, class IArgs>
@@ -52,7 +62,7 @@ constexpr CIt cfprism<C, CIt, IArgs>::end() const noexcept {
 	using std::tuple_cat;
 
 	return make_from_tuple<CIt>(
-		tuple_cat(make_tuple(m_data.end()), args()));
+		tuple_cat(make_tuple(base().end()), args()));
 }
 
 template<class C, class CIt, class IArgs>
@@ -62,7 +72,7 @@ constexpr CIt cfprism<C, CIt, IArgs>::cend() const noexcept {
 	using std::tuple_cat;
 
 	return make_from_tuple<CIt>(
-		tuple_cat(make_tuple(m_data.cend()), args()));
+		tuple_cat(make_tuple(base().cend()), args()));
 }
 
 // Element access -------------------------------------------------------------
@@ -84,12 +94,12 @@ constexpr decltype(auto) cfprism<C, CIt, IArgs>::operator[](difference_type offs
 // Capacity -------------------------------------------------------------------
 template<class C, class CIt, class IArgs>
 constexpr std::size_t cfprism<C, CIt, IArgs>::size() const noexcept {
-	return std::size(m_data);
+	return std::distance(begin(), end());
 }
 
 template<class C, class CIt, class IArgs>
 constexpr bool cfprism<C, CIt, IArgs>::empty() const noexcept {
-	return std::empty(m_data);
+	return size() == 0;
 }
 
 } // namespace zh

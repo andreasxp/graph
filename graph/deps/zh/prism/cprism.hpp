@@ -11,7 +11,7 @@ template <
 	class IArgs = std::tuple<>>
 class cprism : public cfprism<C, CIt, IArgs> {
 private:
-	using base = cfprism<C, CIt, IArgs>;
+	using base_type = cfprism<C, CIt, IArgs>;
 
 public:
 	// Member types ===========================================================
@@ -31,7 +31,7 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	using base::base;
+	using base_type::base_type;
 
 	// Iterators --------------------------------------------------------------
 	// begin inherited

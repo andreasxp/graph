@@ -33,7 +33,12 @@ constexpr It prism<C, It, CIt, RIt, CRIt, IArgs>::begin() noexcept {
 	using std::tuple_cat;
 
 	return make_from_tuple<It>(
-		tuple_cat(make_tuple(this->m_data.begin()), this->args()));
+		tuple_cat(make_tuple(this->base().begin()), this->args()));
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr CIt prism<C, It, CIt, RIt, CRIt, IArgs>::begin() const noexcept {
+	return base_type::begin();
 }
 
 template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
@@ -43,17 +48,32 @@ constexpr It prism<C, It, CIt, RIt, CRIt, IArgs>::end() noexcept {
 	using std::tuple_cat;
 
 	return make_from_tuple<It>(
-		tuple_cat(make_tuple(this->m_data.end()), this->args()));
+		tuple_cat(make_tuple(this->base().end()), this->args()));
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr CIt prism<C, It, CIt, RIt, CRIt, IArgs>::end() const noexcept {
+	return base_type::end();
 }
 
 template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
 constexpr RIt prism<C, It, CIt, RIt, CRIt, IArgs>::rbegin() noexcept {
-	return RIt(this->m_data.end());
+	return RIt(this->base().end());
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr CRIt prism<C, It, CIt, RIt, CRIt, IArgs>::rbegin() const noexcept {
+	return base_type::rbegin();
 }
 
 template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
 constexpr RIt prism<C, It, CIt, RIt, CRIt, IArgs>::rend() noexcept {
-	return RIt(this->m_data.begin());
+	return RIt(this->base().begin());
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr CRIt prism<C, It, CIt, RIt, CRIt, IArgs>::rend() const noexcept {
+	return base_type::rend();
 }
 
 // Element access -------------------------------------------------------------
@@ -63,13 +83,28 @@ constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::front() {
 }
 
 template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::front() const {
+	return *begin();
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
 constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::back() {
 	return *rbegin();
 }
 
 template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::back() const {
+	return *rbegin();
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
 constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::operator[](difference_type offset) {
-	return *begin()[offset];
+	return begin()[offset];
+}
+
+template<class C, class It, class CIt, class RIt, class CRIt, class IArgs>
+constexpr decltype(auto) prism<C, It, CIt, RIt, CRIt, IArgs>::operator[](difference_type offset) const {
+	return begin()[offset];
 }
 
 } // namespace zh

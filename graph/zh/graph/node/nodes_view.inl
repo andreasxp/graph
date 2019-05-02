@@ -7,13 +7,13 @@ namespace zh {
 template<class T, class E>
 typename node_nodes_view<T, E>::iterator
 node_nodes_view<T, E>::find(const node<T, E>& nd) {
-	return this->m_data.find(connection<T, E>::valueless(nd));
+	return this->base().find(connection<T, E>::valueless(nd));
 }
 
 template<class T, class E>
 typename node_nodes_view<T, E>::const_iterator
 node_nodes_view<T, E>::find(const node<T, E>& nd) const {
-	return this->m_data.find(connection<T, E>::valueless(nd));
+	return this->base().find(connection<T, E>::valueless(nd));
 }
 
 template<class T, class E>
@@ -30,7 +30,7 @@ node_const_nodes_view<T, E>::node_const_nodes_view(const node_nodes_view<T, E>& 
 template<class T, class E>
 typename node_const_nodes_view<T, E>::const_iterator
 node_const_nodes_view<T, E>::find(const node<T, E>& nd) const {
-	return this->m_data.find(connection<T, E>::valueless(nd));
+	return this->base().find(connection<T, E>::valueless(nd));
 }
 
 template<class T, class E>

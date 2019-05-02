@@ -11,7 +11,7 @@ template <
 	class IArgs = std::tuple<>>
 class fprism : public cfprism<C, CIt, IArgs> {
 private:
-	using base = cfprism<C, CIt, IArgs>;
+	using base_type = cfprism<C, CIt, IArgs>;
 
 public:
 	// Member types ===========================================================
@@ -29,24 +29,26 @@ public:
 
 	// Member functions =======================================================
 	// Constructors -----------------------------------------------------------
-	using base::base;
+	using base_type::base_type;
 
 	// Iterators --------------------------------------------------------------
-	constexpr It begin() noexcept;
-	// Other begins inherited
+	constexpr It  begin() noexcept;
+	constexpr CIt begin() const noexcept;
+	// cbegin inherited
 
-	constexpr It end() noexcept;
-	// Other ends inherited
+	constexpr It  end() noexcept;
+	constexpr CIt end() const noexcept;
+	// cend inherited
 
 	// Element access ---------------------------------------------------------
 	constexpr decltype(auto) front();
-	// const version inherited
+	constexpr decltype(auto) front() const;
 
 	constexpr decltype(auto) back();
-	// const version inherited
+	constexpr decltype(auto) back() const;
 
 	constexpr decltype(auto) operator[](difference_type offset);
-	// const version inherited
+	constexpr decltype(auto) operator[](difference_type offset) const;
 
 	// Capacity methods inherited
 };
