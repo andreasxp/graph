@@ -12,10 +12,10 @@ using graph_container = std::vector<std::unique_ptr<node<T, E>>>;
 
 template <class T, class E>
 auto make_edges_view(graph_container<T, E>& c) {
-	return ranges::view::for_each(c, [] (auto & node_ptr) {
+	return ranges::views::for_each(c, [] (auto & node_ptr) {
 		auto& nd1 = *node_ptr;
 		
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & con) {
+		return ranges::views::for_each(nd1.m_connections, [&nd1] (auto & con) {
 			auto& nd2 = *con;
 			
 			if constexpr (std::is_same_v<E, void>) {
@@ -30,10 +30,10 @@ auto make_edges_view(graph_container<T, E>& c) {
 
 template <class T, class E>
 auto make_edges_view(const graph_container<T, E>& c) {
-	return ranges::view::for_each(c, [] (auto & node_ptr) {
+	return ranges::views::for_each(c, [] (auto & node_ptr) {
 		auto& nd1 = *node_ptr;
 		
-		return ranges::view::for_each(nd1.m_connections, [&nd1] (auto & con) {
+		return ranges::views::for_each(nd1.m_connections, [&nd1] (auto & con) {
 			auto& nd2 = *con;
 			
 			if constexpr (std::is_same_v<E, void>) {
