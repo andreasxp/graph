@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "deps/ska/flat_hash_map.hpp"
+#include <ska/flat_hash_map.hpp>
 #include <unordered_map>
 #include "../graph.hpp"
 

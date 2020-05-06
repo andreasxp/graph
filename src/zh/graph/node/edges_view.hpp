@@ -1,6 +1,6 @@
 #pragma once
 #include <tuple>
-#include "deps/zh/prism.hpp"
+#include <zh/prism.hpp>
 #include "node_fwd.hpp"
 #include "edge_iterator.hpp"
 

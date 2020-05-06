@@ -1,7 +1,7 @@
 #pragma once
 #include <variant>
 #include "connection_fwd.hpp"
-#include "deps/zh/manual_ptr.hpp"
+#include <zh/manual_ptr.hpp>
 #include "../node/node_fwd.hpp"
 
 namespace zh {

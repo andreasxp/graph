@@ -1,5 +1,5 @@
 #pragma once
-#include "deps/ska/flat_hash_map.hpp"
+#include <ska/flat_hash_map.hpp>
 #include "../connection/connection.hpp"
 #include "functors.hpp"
 

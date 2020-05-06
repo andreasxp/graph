@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "deps/ska/unordered_map.hpp"
+#include <ska/unordered_map.hpp>
 
 #include "graph_fwd.hpp"
 #include "detail.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 #include "non_member.hpp"
 #include "connection.hpp"
-#include "deps/zh/manual_ptr.hpp"
+#include <zh/manual_ptr.hpp>
 
 namespace zh {
 

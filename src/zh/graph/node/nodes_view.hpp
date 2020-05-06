@@ -1,5 +1,5 @@
 #pragma once
-#include "deps/zh/prism.hpp"
+#include <zh/prism.hpp>
 #include "node_iterator.hpp"
 #include "node_fwd.hpp"
 #include "detail.hpp"
