@@ -11,7 +11,7 @@
 
 namespace std {
 
-std::ostream& operator<<(std::ostream& os, const std::monostate& m) {
+std::ostream& operator<<(std::ostream& os, const std::monostate&) {
 	os << "{}";
 	return os;
 }
