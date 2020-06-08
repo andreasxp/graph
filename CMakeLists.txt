@@ -79,10 +79,10 @@ if(${PROJECT_NAME}_BUILD_TESTS)
 endif()
 
 # Examples =============================================================================================================
-#[[if(${PROJECT_NAME}_BUILD_EXAMPLES)
+if(${PROJECT_NAME}_BUILD_EXAMPLES)
 	message(STATUS "Building ${PROJECT_NAME} examples")
 
 	add_executable(${target_name}_example)
 	target_sources(${target_name}_example PRIVATE "examples/example.cpp")
 	target_link_libraries(${target_name}_example PRIVATE ${namespace}::${target_name})
-endif()]]
+endif()
