@@ -1,4 +1,9 @@
 #pragma once
+#include <algorithm>
+#include <fstream>
+#include <string>
+#include <sstream>
+
 #include "graph.hpp"
 #include "edge/edge.hpp"
 
@@ -34,6 +39,44 @@ graph<T, E>::graph(const graph& other) {
 template<class T, class E>
 graph<T, E>::graph(graph&& other) noexcept {
 	swap(*this, other);
+}
+
+template<class T, class E>
+graph<T, E> graph<T, E>::from_adjlist(const std::filesystem::path& filename) {
+	static_assert(std::is_same_v<E, void>, "Adjlist does not support edge values");
+
+	graph<T, E> g;
+
+	std::ifstream ifs(filename);
+
+	for(std::string line; std::getline(ifs, line);) {
+		if (line.size() == 0) break;
+		if (line[0] == '#') continue;
+
+		// Reserve space in graph for all coming nodes to not invalidate iterators
+		g.reserve(g.size() + std::count(line.begin(), line.end(), ' ') + 1);
+		std::istringstream ss(line);
+
+		T source_val;
+		ss >> source_val;
+		if (ss.fail()) throw std::runtime_error("Error reading adjlist");
+
+		auto src_it = std::find(g.begin(), g.end(), source_val);
+		if (src_it == g.end()) src_it = g.emplace(source_val);
+
+		while(!ss.eof()) {
+			T target_val;
+			ss >> target_val;
+			if (ss.fail()) throw std::runtime_error("Error reading adjlist");
+
+			auto it = std::find(g.begin(), g.end(), target_val);
+			if (it == g.end()) it = g.emplace(target_val);
+
+			g.connect(static_cast<graph<T, E>::iterator>(src_it), static_cast<graph<T, E>::iterator>(it));
+		}
+	}
+
+	return g;
 }
 
 template<class T, class E>

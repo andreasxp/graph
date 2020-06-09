@@ -82,7 +82,9 @@ endif()
 if(${PROJECT_NAME}_BUILD_EXAMPLES)
 	message(STATUS "Building ${PROJECT_NAME} examples")
 
-	add_executable(${target_name}_example)
-	target_sources(${target_name}_example PRIVATE "examples/example.cpp")
-	target_link_libraries(${target_name}_example PRIVATE ${namespace}::${target_name})
+	add_executable(${target_name}_basic_usage  "examples/basic_usage.cpp")
+	add_executable(${target_name}_from_adjlist "examples/from_adjlist.cpp")
+
+	target_link_libraries(${target_name}_basic_usage  PRIVATE ${namespace}::${target_name})
+	target_link_libraries(${target_name}_from_adjlist PRIVATE ${namespace}::${target_name})
 endif()

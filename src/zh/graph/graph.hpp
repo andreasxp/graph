@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <memory>
+#include <filesystem>
 
 #include <ska/unordered_map.hpp>
 
@@ -71,6 +72,8 @@ public:
 	graph(const graph& other);
 	graph(graph&& other) noexcept;
 	~graph() = default;
+
+	static graph from_adjlist(const std::filesystem::path& filename);
 
 	graph& operator=(graph rhs);
 
