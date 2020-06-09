@@ -73,6 +73,10 @@ void node<T, E>::connect(node& n, Args&&... edge_args) {
 			con2.value_ptr().has_deleter()
 		);
 	}
+	else {
+		(void)con1;
+		(void)con2;
+	}
 }
 
 template<class T, class E>

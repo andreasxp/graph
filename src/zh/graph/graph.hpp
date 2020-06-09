@@ -74,6 +74,9 @@ public:
 	~graph() = default;
 
 	static graph from_adjlist(const std::filesystem::path& filename);
+	static graph k(std::size_t n, const T& default_value = T());
+	template <class F>
+	static graph k_gen(std::size_t n, F&& generator);
 
 	graph& operator=(graph rhs);
 

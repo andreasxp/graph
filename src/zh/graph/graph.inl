@@ -54,7 +54,7 @@ graph<T, E> graph<T, E>::from_adjlist(const std::filesystem::path& filename) {
 		if (line[0] == '#') continue;
 
 		// Reserve space in graph for all coming nodes to not invalidate iterators
-		g.reserve(g.size() + std::count(line.begin(), line.end(), ' ') + 1);
+		g.reserve(g.size() + static_cast<std::size_t>(std::count(line.begin(), line.end(), ' ')) + 1);
 		std::istringstream ss(line);
 
 		T source_val;
@@ -73,6 +73,43 @@ graph<T, E> graph<T, E>::from_adjlist(const std::filesystem::path& filename) {
 			if (it == g.end()) it = g.emplace(target_val);
 
 			g.connect(static_cast<graph<T, E>::iterator>(src_it), static_cast<graph<T, E>::iterator>(it));
+		}
+	}
+
+	return g;
+}
+
+template<class T, class E>
+graph<T, E> graph<T, E>::k(std::size_t n, const T& default_value) {
+	graph<T, E> g;
+	g.reserve(n);
+
+	for (std::size_t i = 0; i < n; ++i) {
+		g.emplace(default_value);
+	}
+
+	for (auto& nd1 : g.nodes()) {
+		for (auto& nd2 : g.nodes()) {
+			if (nd1.id() < nd2.id()) g.connect(nd1, nd2);
+		}
+	}
+
+	return g;
+}
+
+template<class T, class E>
+template<class F>
+graph<T, E> graph<T, E>::k_gen(std::size_t n, F&& generator) {
+	graph<T, E> g;
+	g.reserve(n);
+
+	for (std::size_t i = 0; i < n; ++i) {
+		g.emplace(generator());
+	}
+
+	for (auto& nd1 : g.nodes()) {
+		for (auto& nd2 : g.nodes()) {
+			if (nd1.id() < nd2.id()) g.connect(nd1, nd2);
 		}
 	}
 
