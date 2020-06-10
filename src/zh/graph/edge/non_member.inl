@@ -65,7 +65,13 @@ bool operator>=(const const_edge<T, E>& lhs, const const_edge<T, E>& rhs) {
 
 template <class T, class E>
 std::ostream& operator<<(std::ostream& os, const edge<T, E>& e) {
-	os << "{#" << e.first().id() << " - #" << e.second().id();
+	auto pretty = [](std::size_t id, int width = 3) {
+		std::stringstream ss;
+		ss << std::hex << std::setw(width) << id % static_cast<std::size_t>(std::pow(0x10, width));		
+		return ss.str();
+	};
+
+	os << "{#" << pretty(e.first().id()) << " - #" << pretty(e.second().id());
 
 	if constexpr (!std::is_same_v<E, void>) {
 		os << " (value: " << e.value() << ")";
@@ -78,7 +84,13 @@ std::ostream& operator<<(std::ostream& os, const edge<T, E>& e) {
 
 template <class T, class E>
 std::ostream& operator<<(std::ostream& os, const const_edge<T, E>& e) {
-	os << "{#" << e.first().id() << " - #" << e.second().id();
+	auto pretty = [](std::size_t id, int width = 3) {
+		std::stringstream ss;
+		ss << std::hex << std::setw(width) << id % static_cast<std::size_t>(std::pow(0x10, width));		
+		return ss.str();
+	};
+
+	os << "{#" << pretty(e.first().id()) << " - #" << pretty(e.second().id());
 
 	if constexpr (!std::is_same_v<E, void>) {
 		os << " (value: " << e.value() << ")";
